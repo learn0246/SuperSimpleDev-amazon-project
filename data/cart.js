@@ -11,17 +11,20 @@ export let cart =
 export function addToCart(productId){
   let matchingItem;
   cart.forEach((cartItem) => {
-    if(cartItem.productId === productId){
+    if(productId === cartItem.productId){
       matchingItem = cartItem;
     }
   });
 
+  let selectorQuantity = Number(document.querySelector(`.js-selector-quantity-${productId}`).value);
+  console.log(selectorQuantity);
+
   if(matchingItem){
-    matchingItem.quantity ++
+    matchingItem.quantity += selectorQuantity;
   }else{
     cart.push({
       productId,
-      quantity: 1
+      quantity: selectorQuantity
     })
   }
 
@@ -44,4 +47,14 @@ export function removeFromCart(productId){
 
 function saveToStorage(){
   localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+
+export function calculateCartQuantity(){
+  let cartQuantity = 0;
+  cart.forEach((item) => {
+    cartQuantity += item.quantity;
+  });
+
+  return cartQuantity;
 }
