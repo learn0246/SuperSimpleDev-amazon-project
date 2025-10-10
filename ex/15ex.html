@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+  </head>
+  <body>
+    
+
+    <script type="module">
+      import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
+
+      //15g
+      import isSatSun  from './15ex-2.js';
+      
+      //15a
+      const today = dayjs();
+      const afterFiveDays = today.add(5, 'day');
+      const afterFiveDaysString = afterFiveDays.format('MM-DD');
+      console.log(afterFiveDaysString);
+
+      //15b
+      const afterOneMonth = today.add(1, 'month');
+      console.log(afterOneMonth.format('MM-DD'));
+
+      //15c
+      const beforeOneMonth = today.subtract(1, 'month');
+      console.log(beforeOneMonth.format('MM-DD'));
+
+      //15d
+      console.log(today.format('dddd'));
+      
+      //15e
+      const todayString = today.format('dddd');
+
+      const afterOneDay = today.add(1, 'day');
+      const afterOnedayString =  afterOneDay.format('dddd');
+
+      //15f
+      isSatSun(afterOnedayString);
+      
+    </script>
+  </body>
+  
+</html>
+
