@@ -80,7 +80,7 @@ export function renderOrderSummary(){
         renderChedckoutHeader();
       });
     });
-
+  
   document.querySelectorAll('.js-update-quantity-link').
     forEach((updateLink) => {
       updateLink.addEventListener('click',() => {
@@ -101,6 +101,7 @@ export function renderOrderSummary(){
         saveQuantity(productId);
         renderPaymentSummary();
         renderChedckoutHeader();
+        renderOrderSummary();
       });
       
     });
@@ -129,9 +130,6 @@ export function renderOrderSummary(){
       return;
     }
     updateQuantity(productId, newQuantity);
-
-    const quantityLabel = document.querySelector(`.js-quantity-label-${productId}`);
-    quantityLabel.innerHTML = newQuantity;
   }
 
   function deliveryOptionsHTML(matchingProduct, cartItem){
