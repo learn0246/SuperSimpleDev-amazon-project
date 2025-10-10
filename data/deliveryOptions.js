@@ -30,8 +30,20 @@ export function getDeliveryOption(deliveryOptionId){
 }
 
 export function calculateDeliveryDate(deliveryOption){
-  const today = dayjs();
-  const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
-  const todayString = deliveryDate.format('dddd, MMMM D');
-  return todayString;
+  let deliveryDate = dayjs();
+  let deliveryDateString;
+  let remainingDays = deliveryOption.deliveryDays;
+  while(remainingDays > 0){
+    deliveryDate = deliveryDate.add(1, 'day');
+    deliveryDateString = deliveryDate.format('dddd');
+    if(deliveryDateString === 'Sunday' || deliveryDateString === 'Saturday'){
+      continue;
+    }
+    
+    remainingDays --;
+  }
+  deliveryDateString = deliveryDate.format('dddd, MMMM D'); 
+  return deliveryDateString;  
 }
+
+
