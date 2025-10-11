@@ -65,7 +65,7 @@ export function renderOrderSummary(){
       </div>
     `
   })
-
+  
   document.querySelector('.js-order-summary')
     .innerHTML = cartSummaryHTML;
 
@@ -113,6 +113,8 @@ export function renderOrderSummary(){
         
         if(event.key === 'Enter'){
           saveQuantity(productId);
+          renderOrderSummary();
+          renderPaymentSummary();
         }
       });
     });
@@ -177,3 +179,4 @@ export function renderOrderSummary(){
     });
   });
 }
+
