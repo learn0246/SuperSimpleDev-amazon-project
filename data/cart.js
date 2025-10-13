@@ -24,7 +24,7 @@ export function addToCart(productId){
     }
   });
 
-  let selectorQuantity = Number(document.querySelector(`.js-selector-quantity-${productId}`).value) || 1;
+  let selectorQuantity = Number(document.querySelector(`.js-selector-quantity-${productId}`).value);
 
   if(matchingItem){
     matchingItem.quantity += selectorQuantity;
