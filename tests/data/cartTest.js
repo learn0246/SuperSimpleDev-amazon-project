@@ -137,6 +137,20 @@ describe('test suite: updateDeliveryOption()', () => {
       }])
     );
   });
+
+  //edge test
+  it('does nothing if the product is not in the cart', () => {
+    updateDeliveryOption('123', '1');
+    expect(localStorage.setItem).toHaveBeenCalledTimes(0);
+
+    expect(cart[0].deliveryOptionId).toEqual('1');
+
+    expect(cart.length).toEqual(1);
+
+    expect(cart[0].productId).toEqual(productId1);
+
+    expect(cart[0].quantity).toEqual(1);
+  })
 });
 
 
