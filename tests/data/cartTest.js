@@ -150,6 +150,20 @@ describe('test suite: updateDeliveryOption()', () => {
     expect(cart[0].productId).toEqual(productId1);
 
     expect(cart[0].quantity).toEqual(1);
+  });
+
+  it('does nothing if the deliveryOptionId is not exist', () => {
+    updateDeliveryOption(productId1, '4');
+
+    expect(localStorage.setItem).toHaveBeenCalledTimes(0);
+
+    expect(cart[0].deliveryOptionId).toEqual('1');
+
+    expect(cart.length).toEqual(1);
+
+    expect(cart[0].productId).toEqual(productId1);
+
+    expect(cart[0].quantity).toEqual(1);
   })
 });
 
