@@ -1,5 +1,6 @@
-import {cart, addToCart, loadFromStorage} from '../../data/cart.js';
-
+import {cart, addToCart, loadFromStorage, removeFromCart} from '../../data/cart.js';
+const productId1 = '15b6fc6f-327a-4ec4-896f-486349e85a3d';
+const productId2 = 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6';
 describe('test suite: addToCart()', () => {
   beforeEach( () => {
     spyOn(localStorage, 'setItem');
@@ -48,7 +49,7 @@ describe('test suite: addToCart()', () => {
     expect(localStorage.setItem).toHaveBeenCalledTimes(1);
     expect(cart[0].productId).toEqual('15b6fc6f-327a-4ec4-896f-486349e85a3d');
     expect(cart[0].quantity).toEqual(1);
-
+  
     //16-d
     expect(localStorage.setItem).toHaveBeenCalledWith('cart', JSON.stringify(
       [{
@@ -59,5 +60,48 @@ describe('test suite: addToCart()', () => {
     ))
   });
 
-
+  
 });
+
+describe('test suite: removeFromCart()', () => {
+  beforeEach(() => {
+    spyOn(localStorage, 'setItem');
+    spyOn(localStorage, 'getItem').and.callFake(() => {
+      return JSON.stringify([{
+        productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
+        quantity: 1,
+        deliveryOptionId: '1'
+      }]);
+    });
+    loadFromStorage();
+  });
+
+  it('removes item from cart', () => {
+    removeFromCart(productId1);
+    expect(cart.length).toEqual(0);
+    expect(localStorage.setItem).toHaveBeenCalledTimes(1);
+    expect(localStorage.setItem).toHaveBeenCalledWith('cart', '[]');
+  });
+
+  it('remove item that dose not exist in the cart', () => {
+    removeFromCart(productId2);
+    expect(cart.length).toEqual(1);
+    expect(localStorage.setItem).toHaveBeenCalledTimes(1);
+    expect(localStorage.setItem).toHaveBeenCalledWith('cart', 
+      JSON.stringify([{
+        productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
+        quantity: 1,
+        deliveryOptionId: '1'
+      }])
+    );
+  });
+
+  it('called the localStorage.setItem and with the correct value', () => {
+    removeFromCart(productId1);
+    
+    expect(localStorage.setItem).toHaveBeenCalledTimes(1);
+    expect(localStorage.setItem).toHaveBeenCalledWith('cart', '[]');
+  });
+});
+
+
