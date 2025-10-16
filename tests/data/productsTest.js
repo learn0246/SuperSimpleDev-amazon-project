@@ -1,4 +1,4 @@
-import {Product, Clothing, Appliance, products} from '../../data/products.js';
+import {Product, Clothing, Appliance, products, loadProducts} from '../../data/products.js';
 
 describe('test suite: class Product', () => {
   const product1 = new Product({
@@ -16,7 +16,14 @@ describe('test suite: class Product', () => {
     ]
   });
 
+  beforeAll((done) => {
+    loadProducts(() => {
+      done();
+    });
+  });
+
   it('check the product detail', () => {
+    console.log(products);
     expect(product1).toEqual(products[1]);
   });
 
@@ -94,6 +101,12 @@ describe('test suite: class Appliance', () => {
     
   });
   
+  beforeAll((done) => {
+    loadProducts(() => {
+      done();
+    });
+  });
+
   it('check the product detail', () => {
     expect(product3).toEqual(products[3]);
   });

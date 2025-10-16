@@ -62,8 +62,8 @@ export class Appliance extends Product{
   
   constructor(productDetails){
     super(productDetails);
-    this.instructionsLink = productDetails.instructionsLink;
-    this.warrantyLink = productDetails.warrantyLink;
+    this.instructionsLink = 'images/appliance-instructions.png';
+    this.warrantyLink = 'images/appliance-warranty.png';
   }
 
   extraInfoHTML(){
@@ -85,6 +85,11 @@ export function loadProducts(func){
 
   xhr.addEventListener('load', () => {
     products = JSON.parse(xhr.response).map((productDetails) => {
+      //this is for the productsTest the oringin data doesn't heve type 'appliance'
+      if(productDetails.name === "2 Slot Toaster - Black"){
+        productDetails.type = 'appliance';
+      }
+
       if(productDetails.type === 'clothing'){
         return new Clothing(productDetails);
       }else if(productDetails.type === 'appliance'){
@@ -92,9 +97,10 @@ export function loadProducts(func){
       }
       return new Product(productDetails);
     });
+    console.log(products);
     func();
   });
-
+  
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
 
