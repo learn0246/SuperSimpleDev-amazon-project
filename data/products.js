@@ -99,11 +99,13 @@ export function loadProductsFetch(){
       }
       return new Product(productDetails);
     });
+    
+  }).catch((error) => {
+    console.log('Unexpected error');
   });
 
   return promise
 }
-
 
 export function loadProducts(func){
   const xhr = new XMLHttpRequest();
@@ -127,10 +129,13 @@ export function loadProducts(func){
     console.log('products loaded');
   });
   
+  xhr.addEventListener('error', (error) => {
+    console.log('Unexpected error');
+  })
+
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
 }
-
 
 
 /*
