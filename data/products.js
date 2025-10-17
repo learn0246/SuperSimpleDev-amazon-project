@@ -99,12 +99,11 @@ export function loadProducts(func){
     });
     console.log(products);
     func();
+    console.log('products loaded');
   });
   
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
-
-  console.log('products loaded');
 }
 
 

@@ -101,9 +101,17 @@ export function updateDeliveryOption(productId, deliveryOptionId){
       matchingProduct.deliveryOptionId = deliveryOptionId;
       saveToStorage();
     }
-  });
+  });  
+}
 
+export function loadCart(func){
+  const xhr = new XMLHttpRequest();
+
+  xhr.addEventListener('load', () => {
+    console.log(xhr.response);
+    func();
+  });
   
-  
-  
+  xhr.open('GET', 'https://supersimplebackend.dev/cart');
+  xhr.send();
 }
