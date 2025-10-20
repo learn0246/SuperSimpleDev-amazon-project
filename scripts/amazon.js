@@ -1,4 +1,4 @@
-import {cart, addToCart, calculateCartQuantity} from '../data/cart.js';
+import {cart, addToCart, calculateCartQuantity, updateCartQuantity} from '../data/cart.js';
 import {products, loadProducts} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
 
@@ -69,12 +69,7 @@ function renderProductsGrid(){
 
   updateCartQuantity();
 
-  function updateCartQuantity(){
-    let cartQuantity = calculateCartQuantity();
-
-    document.querySelector('.js-cart-quantity').
-      innerHTML = cartQuantity;
-  }
+  
 
 
   document.querySelectorAll('.js-add-to-cart').

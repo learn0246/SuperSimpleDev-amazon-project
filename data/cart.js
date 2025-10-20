@@ -122,3 +122,10 @@ export async function loadCartFetch(){
   console.log(text);
   return text;
 }
+
+export function updateCartQuantity(){
+  let cartQuantity = calculateCartQuantity();
+
+  document.querySelector('.js-cart-quantity').
+    innerHTML = cartQuantity;
+}
