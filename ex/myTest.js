@@ -1,3 +1,4 @@
+import { add } from "./myTest2.js";
 /*
 const xhr = new XMLHttpRequest();
 
@@ -17,7 +18,7 @@ fetch('https://supersimplebackend.dev/products').then((response) => {
   console.log(response);
 })
 */
-
+/*
 async function load(){
   await fetch('')
 }
@@ -34,3 +35,7 @@ new Promise((resolve) => {
   console.log('resolve2');
   resolve();
 }).then();
+*/
+
+add();
+console.log(add());

@@ -6,7 +6,7 @@ import { updateCartQuantity, addToCart} from "../data/cart.js";
 
 updateCartQuantity();
 
-async function loadOrders(){
+async function loadOrdersPage(){
   await loadProductsFetch();
 
   let ordersHtml = '';
@@ -70,7 +70,7 @@ async function loadOrders(){
         </div>
 
         <div class="product-actions">
-          <a href="tracking.html?${order.id}&${productDetails.productId}">
+          <a href="tracking.html?orderId=${order.id}&productId=${productDetails.productId}">
             <button class="track-package-button button-secondary js-track-package-button" data-product-id="${productDetails.productId}
               data-order-Id="${order.id}">
               Track package
@@ -101,4 +101,4 @@ async function loadOrders(){
   });
 }
 
-loadOrders();
+loadOrdersPage();
