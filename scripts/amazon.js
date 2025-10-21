@@ -1,14 +1,14 @@
 import {cart, addToCart, calculateCartQuantity, updateCartQuantity} from '../data/cart.js';
-import {products, loadProducts} from '../data/products.js';
+import {products, loadProducts, loadProductsFetch} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
 
 loadProducts(renderProductsGrid);
 
-function renderProductsGrid(){
-
+export function renderProductsGrid(){
   let productsHTML = '';
+  let filteredProduct = SearchingProduct();
 
-  products.forEach((product) => {
+  filteredProduct.forEach((product) => {
     productsHTML += `
       <div class="product-container">
         <div class="product-image-container">
@@ -64,13 +64,11 @@ function renderProductsGrid(){
     `
   });
 
+  
   document.querySelector('.js-products-grid').
     innerHTML = productsHTML;
 
   updateCartQuantity();
-
-  
-
 
   document.querySelectorAll('.js-add-to-cart').
     forEach((button) => {
@@ -84,3 +82,36 @@ function renderProductsGrid(){
     });
 }
   
+function SearchingProduct(){
+  let filteredProduct = products;
+  document.querySelector('.js-search-bar').addEventListener('keydown', (event) => {
+    if(event.key === 'Enter'){
+      document.querySelector('.js-search-button').click();
+    }  
+  });
+
+  document.querySelector('.js-search-button').addEventListener('click', () => {
+    const searchValue = document.querySelector('.js-search-bar').value
+    window.location.href = `amazon.html?search=${searchValue}`;
+  });
+
+  const url = new URL(window.location);
+  const search  = url.searchParams.get('search');
+  const keyword = search != null 
+    ? String(search.toLowerCase()) 
+    : '';
+
+  if(keyword){
+    filteredProduct = products.filter((product) => {
+      return product.name.toLowerCase().includes(keyword);
+    });
+  }
+
+  if(!filteredProduct[0]){
+    document.querySelector('.js-display-message').innerHTML = `
+      <p style="text-align: center; width:100%;">Sorry. there is no products match your search : '${url.searchParams.get('search')}'</p>
+    ` 
+  }
+
+  return filteredProduct;
+}

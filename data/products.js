@@ -99,6 +99,8 @@ export function loadProductsFetch(){
       }
       return new Product(productDetails);
     });
+  
+    return products;
     
   }).catch((error) => {
     console.log('Unexpected error');
