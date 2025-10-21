@@ -3,6 +3,7 @@ import { getOrder } from "../data/orders.js";
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import { loadProductsFetch, getProduct } from "../data/products.js";
 import { progress } from "../data/orders.js";
+import { searchingProduct } from "./amazon/search.js";
 
 async function loadTrackingPage(){
   await loadProductsFetch();
@@ -67,11 +68,12 @@ async function loadTrackingPage(){
     <div class="progress-bar-container">
       <div class="progress-bar" style="width:${progressTime}%"></div>
     </div>
-      
   `
 
   document.querySelector(`.js-order-tracking`).innerHTML = trackingPageHtml;
+
   updateCartQuantity();
+  searchingProduct();
 }
 
 

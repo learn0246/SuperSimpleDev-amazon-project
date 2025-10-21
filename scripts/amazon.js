@@ -1,12 +1,36 @@
 import {cart, addToCart, calculateCartQuantity, updateCartQuantity} from '../data/cart.js';
 import {products, loadProducts, loadProductsFetch} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
+import { searchingProduct } from './amazon/search.js';
+//loadProducts(renderProductsGrid);
 
-loadProducts(renderProductsGrid);
 
-export function renderProductsGrid(){
+
+export async function renderProductsGrid(){
+  await loadProductsFetch();
   let productsHTML = '';
-  let filteredProduct = SearchingProduct();
+
+  let filteredProduct = [];
+  filteredProduct = products;
+
+  const url = new URL(window.location);
+  const search  = url.searchParams.get('search');
+  const keyword = search != null 
+    ? String(search.toLowerCase()) 
+    : '';
+  
+  if(keyword){
+    filteredProduct = products.filter((product) => {
+      return product.name.toLowerCase().includes(keyword);
+    });
+    console.log(filteredProduct);
+  }
+
+  if(!filteredProduct[0]){
+    document.querySelector('.js-display-message').innerHTML = `
+      <p style="text-align: center; width:100%;">Sorry. there is no products match your search : '${url.searchParams.get('search')}'</p>
+    ` 
+  }
 
   filteredProduct.forEach((product) => {
     productsHTML += `
@@ -81,37 +105,6 @@ export function renderProductsGrid(){
       });
     });
 }
-  
-function SearchingProduct(){
-  let filteredProduct = products;
-  document.querySelector('.js-search-bar').addEventListener('keydown', (event) => {
-    if(event.key === 'Enter'){
-      document.querySelector('.js-search-button').click();
-    }  
-  });
 
-  document.querySelector('.js-search-button').addEventListener('click', () => {
-    const searchValue = document.querySelector('.js-search-bar').value
-    window.location.href = `amazon.html?search=${searchValue}`;
-  });
-
-  const url = new URL(window.location);
-  const search  = url.searchParams.get('search');
-  const keyword = search != null 
-    ? String(search.toLowerCase()) 
-    : '';
-
-  if(keyword){
-    filteredProduct = products.filter((product) => {
-      return product.name.toLowerCase().includes(keyword);
-    });
-  }
-
-  if(!filteredProduct[0]){
-    document.querySelector('.js-display-message').innerHTML = `
-      <p style="text-align: center; width:100%;">Sorry. there is no products match your search : '${url.searchParams.get('search')}'</p>
-    ` 
-  }
-
-  return filteredProduct;
-}
+renderProductsGrid();
+searchingProduct();
