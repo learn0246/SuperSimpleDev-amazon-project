@@ -8,8 +8,8 @@ import { searchingProduct } from './amazon/search.js';
 
 export async function renderProductsGrid(){
   await loadProductsFetch();
-  let productsHTML = '';
 
+  let productsHTML = '';
   let filteredProduct = [];
   filteredProduct = products;
 
@@ -21,10 +21,19 @@ export async function renderProductsGrid(){
   
   if(keyword){
     filteredProduct = products.filter((product) => {
-      return product.name.toLowerCase().includes(keyword);
+      let matchingKeyword = false;
+
+      product.keywords.forEach((keyword) => {
+        if(keyword.toLowerCase() === keyword){
+          return matchingKeyword = true;
+        }
+      });
+      
+      return matchingKeyword || product.name.toLowerCase().includes(keyword);
     });
-    console.log(filteredProduct);
   }
+
+  
 
   if(!filteredProduct[0]){
     document.querySelector('.js-display-message').innerHTML = `
