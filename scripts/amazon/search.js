@@ -8,7 +8,7 @@ export function searchingProduct(){
   document.querySelector('.js-search-button').addEventListener('click', () => {
     const searchValue = document.querySelector('.js-search-bar').value
 
-    window.location.href = `amazon.html?search=${searchValue}`;
+    window.location.href = `index.html?search=${searchValue}`;
   });
 }
 
